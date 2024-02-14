@@ -16,8 +16,8 @@ export const SubTitle = styled.Text`
     font-weight: 400;
     color: #FFFFFF;
 `
-export const InputCustom = styled.TextInput`
-    width :${(props: any) => (props.width ? props.width : '220px')};
+export const InputCustom = styled.TextInput<{ width?: string }>`
+    width: ${(props: { width?: string }) => (props.width ? props.width : '220px')};
     height: 40px;
     padding: 10px;
     border-radius: 8px;

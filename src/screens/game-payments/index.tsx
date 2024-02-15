@@ -7,6 +7,7 @@ import { BoxFlatList } from "../sort-team/styles";
 import Checkbox from "expo-checkbox";
 import { ButtonMain } from "../../components/buttonmain";
 import { ContainerPosition, PositionText } from "../../components/playercard/styles";
+import { StatusBar } from "expo-status-bar";
 
 export const GamePayments = ({ route, navigation }: any) => {
     const [players, setPlayers] = useState<any>([]);

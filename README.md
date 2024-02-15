@@ -1,5 +1,5 @@
 # fut-app
-[] - fazer compartilhamento do time no wpp
+[X] - fazer compartilhamento do time no wpp
 [] - adicionar opção de deleção para partida
 [X] - adicionar icone
 [X] - adicionar splash screen

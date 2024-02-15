@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, Text, FlatList } from "react-native"
+import { View, Text, FlatList, Linking } from "react-native"
 import { Container, Title } from "../../Global"
 import { CardTime, TextCard, ViewPlayer, Wrapper } from "./styles";
 import { ButtonMain } from "../../components/buttonmain";
@@ -34,6 +34,17 @@ export const Results = ({ navigation }: any) => {
         getData();
     }, []);
 
+    const handleShare = () => {
+        const message = `Confira o resultado dos times para a partida: \n\nTime Um:\n\n${timeUm.map((item) => `${item.nome}${item.goleiro ? ' (Goleiro)' : ''}`).join('\n')} 
+        \n\nTime Dois:\n\n${timeDois.map((item) => `${item.nome}${item.goleiro ? ' (Goleiro)' : ''}`).join('\n')} \nCompartilhado pelo FUT APP!`;
+            console.log(message)    
+        const whatsappURL = `whatsapp://send?text=${encodeURIComponent(message)}`;
+
+        Linking.openURL(whatsappURL)
+            .then(() => console.log('WhatsApp opened'))
+            .catch((err) => console.error('An error occurred', err));
+    };
+
     const ListaJogadores = (props: IJogadores) => {
         return (
             <ViewPlayer key={props.id}>
@@ -65,6 +76,7 @@ export const Results = ({ navigation }: any) => {
             </CardTime>
             <Wrapper>
                 <ButtonMain text="Voltar" onPress={() => navigation.navigate('home')} />
+                <ButtonMain text="Compartilhar no Whatsapp" color="#43C478" onPress={handleShare} />
             </Wrapper>
         </Container>
     )

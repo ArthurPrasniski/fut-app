@@ -25,7 +25,7 @@ export const Wrapper = Styled.View`
 flex: 1;
     width: 100%;
     height: auto;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: flex-end;
 `

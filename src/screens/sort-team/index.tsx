@@ -7,6 +7,9 @@ import { SetStateAction, useState } from "react"
 import { FlatList, Switch } from 'react-native'
 import { shuffle } from 'lodash';
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+import { database } from "../../database";
+import { Game } from "../../database/model/games-model"
+import { Player } from "../../database/model/players-model"
 
 interface IJogadores {
     id: number;
@@ -96,10 +99,20 @@ export const SortTeam = ({ navigation }: any) => {
         if (jogadores.length < 10) {
             alert('Insira no mínimo 10 jogadores')
         } else {
-            // await AsyncStorage.setItem('@game', JSON.stringify({ id: Math.floor(Math.random() * 1000), nome: game, data: date, jogadores: jogadores } as unknown as IGame));
-            // await AsyncStorage.setItem('@jogadores', JSON.stringify(jogadores));
-            // await AsyncStorage.setItem('@timeum', JSON.stringify(time1));
-            // await AsyncStorage.setItem('@timedois', JSON.stringify(time2));
+            await database.write(async () => {
+                const game = await database.get<Game>('games').create((newGame: any) => {
+                    newGame.nome = game;
+                    newGame.data = date.toISOString();
+                })
+                jogadores.forEach(async (jogador) => {
+                    await database.get<Player>('players').create((newPlayer: any) => {
+                        newPlayer.nome = jogador.nome;
+                        newPlayer.goleiro = jogador.goleiro;
+                        newPlayer.isPayed = jogador.isPayed;
+                        newPlayer.game_id = game.id;
+                    });
+                });
+            })
             setJogadores([])
             navigation.navigate('results');
         }

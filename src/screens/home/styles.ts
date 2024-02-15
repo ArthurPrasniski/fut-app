@@ -17,7 +17,7 @@ export const ButtonOlder = styled.TouchableOpacity`
     margin-top: 20px;
     padding-left: 20px;
     border-radius: 8px;
-    background-color: #d1d1d1;
+    background-color: #f1f1f1;
     align-items: flex-start;
     justify-content: center;
 `
@@ -31,5 +31,11 @@ export const ButtonText = styled.Text`
 export const ButtonText2 = styled.Text`
     font-size: 20px;
     font-weight: 700;
+    color: #43C478;
+`
+
+export const Title = styled.Text`
+    font-size: 24px;
+    font-weight: bold;
     color: #43C478;
 `

@@ -2,6 +2,7 @@ import React from "react";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SortTeam, Results, Home, OldGames } from './src/screens'
+import { GamePayments } from "./src/screens/game-payments";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +36,11 @@ export default function App() {
           <Stack.Screen
             name="OldGames"
             component={OldGames}
+            options={{ headerShown: false }}
+          />
+           <Stack.Screen
+            name="GamePayments"
+            component={GamePayments}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

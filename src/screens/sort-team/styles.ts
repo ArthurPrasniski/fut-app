@@ -27,6 +27,7 @@ export const BoxFooter = Styled.View`
   width: 100%;
   position: absolute;
   bottom: 20px;
+  gap: 12px;
 `
 export const BoxFlex = Styled.View`
   flex-direction: row;

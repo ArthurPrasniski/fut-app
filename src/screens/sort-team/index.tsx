@@ -10,6 +10,7 @@ import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import { database } from "../../database";
 import { Game } from "../../database/model/games-model"
 import { Player } from "../../database/model/players-model"
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface IJogadores {
     id: number;
@@ -30,7 +31,7 @@ export const SortTeam = ({ navigation }: any) => {
     const [isGk, setIsGk] = useState(false)
     const [nomeJogador, setNomeJogador] = useState('')
     const [jogadores, setJogadores] = useState<IJogadores[]>([])
-    const [game, setGame] = useState('')
+    const [gameName, setGameName] = useState('')
 
     const onChange = (event: any, selectedDate: any) => {
         const currentDate = selectedDate;
@@ -65,7 +66,7 @@ export const SortTeam = ({ navigation }: any) => {
     }
 
     const handleInputChange = (value: SetStateAction<string>) => setNomeJogador(value)
-    const handleInputGame = (value: SetStateAction<string>) => setGame(value)
+    const handleInputGame = (value: SetStateAction<string>) => setGameName(value)
 
     const handleAddButton = () => {
         if (nomeJogador === '') {
@@ -99,9 +100,14 @@ export const SortTeam = ({ navigation }: any) => {
         if (jogadores.length < 10) {
             alert('Insira no mínimo 10 jogadores')
         } else {
+            await AsyncStorage.setItem('@game', JSON.stringify({ id: Math.floor(Math.random() * 1000), nome: gameName, data: date, jogadores: jogadores } as unknown as IGame));
+            await AsyncStorage.setItem('@jogadores', JSON.stringify(jogadores));
+            await AsyncStorage.setItem('@timeum', JSON.stringify(time1));
+            await AsyncStorage.setItem('@timedois', JSON.stringify(time2));
+
             await database.write(async () => {
                 const game = await database.get<Game>('games').create((newGame: any) => {
-                    newGame.nome = game;
+                    newGame.nome = gameName;
                     newGame.data = date.toISOString();
                 })
                 jogadores.forEach(async (jogador) => {
@@ -121,9 +127,9 @@ export const SortTeam = ({ navigation }: any) => {
     return (
         <Container>
             <BoxHeader>
-                <InputCustom placeholder="Digite o nome do jogo" onChangeText={handleInputGame} value={game} width="100%" />
+                <InputCustom placeholder="Digite o nome do jogo" onChangeText={handleInputGame} value={gameName} width="100%" />
                 <BoxFlex>
-                    <InputCustom placeholder="Selecione a data" width="280px" defaultValue={date.toLocaleDateString('PT-br')} editable={false}/>
+                    <InputCustom placeholder="Selecione a data" width="280px" defaultValue={date.toLocaleDateString('PT-br')} editable={false} />
                     <ButtonMain onPress={showDatepicker} width="60px" isCalendar />
                 </BoxFlex>
                 <BoxFlex>
@@ -144,7 +150,8 @@ export const SortTeam = ({ navigation }: any) => {
                 </BoxFlatList>
             </BoxBody>
             <BoxFooter>
-                <ButtonMain text="Sortear" onPress={handleSepararTimes} />
+                <ButtonMain text="Sortear" color="#43C478" onPress={handleSepararTimes} />
+                <ButtonMain text="Voltar" onPress={() => navigation.navigate('home')} />
             </BoxFooter>
         </Container>
     )

@@ -3,15 +3,14 @@ import Checkbox from 'expo-checkbox';
 
 export const PlayerCard = styled.View`
     width: 100%;
-    height: 40px;
-    flex-direction: row;
+    height: 80px;
+    flex-direction: column;
     margin-top: 18px;
-    padding-left: 20px;
-    padding-right: 36px;
+    padding: 12px;
     border-radius: 8px;
-    background-color: #D9D9D9;
-    align-items: center;
-    justify-content: space-between;
+    background-color: #f1f1f1;
+    align-items: flex-start;
+    justify-content: center;
 `
 export const Header = styled.View`
     width: 100%;
@@ -21,22 +20,18 @@ export const Header = styled.View`
     justify-content: space-between;
 `
 export const Title = styled.Text`
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
+`
+export const TitleHeader = styled.Text`
     font-size: 18px;
     font-weight: bold;
-    color: #D9D9D9;
+    color: #43C478;
 `
 export const Date = styled.Text`
-    font-size: 14px;
-    color: #D9D9D9;
-`
-export const HeaderSubtitle = styled.View`
-    width: 100%;
-    flex-direction: row;
-    margin-top: 10px;
-    padding-left: 20px;
-    padding-right: 32px;
-    align-items: flex-end;
-    justify-content: space-between; 
+    font-size: 12px;
+    color: #A1A1A1;
 `
 export const Subtitle = styled.Text`
     font-size: 14px;

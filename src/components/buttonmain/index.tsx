@@ -6,11 +6,12 @@ interface IButtonProps {
     onPress: () => void;
     width?: string;
     isCalendar?: boolean;
+    color?: string;
 }
 
 export const ButtonMain = (props: IButtonProps) => {
     return (
-        <ButtonCustom onPress={props.onPress} width={props.width}>
+        <ButtonCustom onPress={props.onPress} width={props.width} color={props.color}>
             <ButtonText>
                 {props.text}
                 {props.isCalendar && <Feather name="calendar" size={24} color="white" />}

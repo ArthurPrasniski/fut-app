@@ -4,7 +4,7 @@ import { Container, Title } from "../../Global"
 import { CardTime, TextCard, ViewPlayer, Wrapper } from "./styles";
 import { ButtonMain } from "../../components/buttonmain";
 import { ContainerPosition, PositionText } from "../../components/playercard/styles";
-import { database } from "../../database";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface IJogadores {
     id: number;
@@ -15,12 +15,16 @@ interface IJogadores {
 export const Results = ({ navigation }: any) => {
     const [timeUm, setTimeUm] = useState<IJogadores[]>([])
     const [timeDois, setTimeDois] = useState<IJogadores[]>([])
-    console.log("TIME UM:", timeUm)
-    console.log("TIME DOIS:", timeDois)
 
     const getData = async () => {
         try {
-            
+            const TimeUm = await AsyncStorage.getItem('@timeum');
+            const TimeDois = await AsyncStorage.getItem('@timedois');
+
+            if (TimeUm !== null && TimeDois !== null) {
+                setTimeUm(JSON.parse(TimeUm));
+                setTimeDois(JSON.parse(TimeDois));
+            }
         } catch (e) {
             alert('Erro ao recuperar times');
         }

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Fut App",
-    "slug": "Fut App",
+    "name": "fut-app",
+    "slug": "fut-app",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"

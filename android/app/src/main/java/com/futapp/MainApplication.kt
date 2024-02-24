@@ -1,4 +1,4 @@
-package com.futapp
+package com.futappbyapv
 
 import android.app.Application
 import android.content.res.Configuration

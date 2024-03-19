@@ -36,3 +36,46 @@ export const BoxFlex = Styled.View`
   align-items: center;
   justify-content: space-between;
 `
+
+export const ModalView = Styled.View`
+  background-color: #fefefe;
+  padding: 20px;
+  border-radius: 12px 12px 0px 0px;
+  width: 100%;
+  height: 220px;
+  bottom: 0;
+  position: absolute;
+  align-self: center;
+`
+
+export const TitleModal = Styled.Text`
+  font-size: 16px;
+  color: #000;
+  font-weight: bold;
+  text-align: center;
+`
+export const SkillValue = Styled.Text`
+  margin-top: 12px; 
+  font-size: 24px;
+  color: #000;
+  font-weight: bold;
+  text-align: center;
+`
+
+export const BoxSkill = Styled.View`
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+`
+export const SkillText = Styled.Text`
+  font-size: 14px;
+  color:  #fefefe;
+  font-weight: normal;
+  text-align: center;
+`
+export const SkillValueText = Styled.Text`
+  font-size: 18px;
+  color:  ${(props: any) => (props.color ? props.color : '#fefefe')};
+  font-weight: bold;
+  text-align: center;
+`

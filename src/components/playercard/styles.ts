@@ -31,3 +31,19 @@ export const ContainerPosition = styled.View`
   justify-content: center;
   background-color: #50fa7b;
 `
+
+export const SkillContainer = styled.View`
+  width: 32px;
+  height: 32px;
+  padding: 2px;
+  border-radius: 4px;
+  align-items: center;
+  justify-content: center;
+  background-color: ${(props: any) => (props.background ? props.background : '#fefefe')};
+`
+
+export const SkillText = styled.Text`
+  font-size: 14px;
+  color: #fefefe;
+  font-weight: bold;
+`

@@ -13,6 +13,7 @@ export const GamePayments = ({ route, navigation }: any) => {
     const [players, setPlayers] = useState<any>([]);
     const [game, setGame] = useState<any>({});
     const [isChecked, setIsChecked] = useState(false);
+    const [totalPayed, setTotalPayed] = useState();
 
     const getData = async () => {
         const { gameId } = route.params;
@@ -28,9 +29,15 @@ export const GamePayments = ({ route, navigation }: any) => {
         }
     }
 
+    const getTotalPayed = () => {
+        const payed = players.filter((player: any) => player.isPayed === true);
+        setTotalPayed(payed.length);
+    }
+
     useEffect(() => {
+        getTotalPayed()
         getData()
-    }, [])
+    }, [players])
 
     const handlePayed = async (id: string, value: boolean) => {
         try {
@@ -41,6 +48,7 @@ export const GamePayments = ({ route, navigation }: any) => {
                 })
             })
             setIsChecked(value);
+            getTotalPayed()
             getData();
         } catch (error) {
             alert('Erro ao atualizar o pagamento do jogador!');
@@ -57,7 +65,7 @@ export const GamePayments = ({ route, navigation }: any) => {
                 <Divider />
                 <HeaderSubtitle>
                     <Header>Jogador</Header>
-                    <Header>Pago</Header>
+                    <Header>Pago ({totalPayed}/{players.length})</Header>
                 </HeaderSubtitle>
                 <FlatList data={players} renderItem={({ item }) => (
                     <PlayerCard onPress={() => handlePayed(item.id, !isChecked)}>

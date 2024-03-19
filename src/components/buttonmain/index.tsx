@@ -7,6 +7,7 @@ interface IButtonProps {
     width?: string;
     isCalendar?: boolean;
     color?: string;
+    isSkill?: boolean;
 }
 
 export const ButtonMain = (props: IButtonProps) => {
@@ -15,6 +16,7 @@ export const ButtonMain = (props: IButtonProps) => {
             <ButtonText>
                 {props.text}
                 {props.isCalendar && <Feather name="calendar" size={24} color="white" />}
+                {props.isSkill && <Feather name="plus" size={24} color="white" />}
             </ButtonText>
         </ButtonCustom>
     )

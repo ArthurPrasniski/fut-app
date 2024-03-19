@@ -1,22 +1,24 @@
-import { BoxBody, BoxContent, BoxFlatList, BoxFlex, BoxFooter, BoxHeader } from "./styles"
+import { BoxBody, BoxContent, BoxFlatList, BoxFlex, BoxFooter, BoxHeader, BoxSkill, ModalView, SkillText, SkillValue, SkillValueText, TitleModal } from "./styles"
 import { Container, InputCustom, Title } from "../../Global"
 import { ButtonMain } from "../../components/buttonmain"
 import { PlayerCard } from "../../components/playercard"
 import { ButtonDelete } from "../../components/buttondelete"
 import { SetStateAction, useState } from "react"
-import { FlatList, Switch } from 'react-native'
+import { FlatList, Modal, Switch } from 'react-native'
 import { shuffle } from 'lodash';
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import { database } from "../../database";
 import { Game } from "../../database/model/games-model"
 import { Player } from "../../database/model/players-model"
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Slider from '@react-native-community/slider';
 
 interface IJogadores {
     id: number;
     nome: string;
     goleiro: boolean;
     isPayed: boolean;
+    skill: number;
 }
 
 interface IGame {
@@ -32,6 +34,9 @@ export const SortTeam = ({ navigation }: any) => {
     const [nomeJogador, setNomeJogador] = useState('')
     const [jogadores, setJogadores] = useState<IJogadores[]>([])
     const [gameName, setGameName] = useState('')
+    const [showSkillModal, setShowSkillModal] = useState(false)
+    const [skill, setSkill] = useState(0)
+    const [playerSkill, setPlayerSkill] = useState(0)
 
     const onChange = (event: any, selectedDate: any) => {
         const currentDate = selectedDate;
@@ -47,6 +52,12 @@ export const SortTeam = ({ navigation }: any) => {
         });
     };
 
+    const HandleChangePlayerSkill = (skill: number) => {
+        setPlayerSkill(skill)
+        setSkill(0)
+        setShowSkillModal(!showSkillModal)
+    }
+
     const showDatepicker = () => {
         showMode('date');
     };
@@ -59,7 +70,7 @@ export const SortTeam = ({ navigation }: any) => {
     const ListaJogadores = (props: IJogadores) => {
         return (
             <BoxContent key={props.id}>
-                <PlayerCard name={props.nome} position={props.goleiro} />
+                <PlayerCard name={props.nome} position={props.goleiro} skill={props.skill}/>
                 <ButtonDelete onPress={() => deleteFromList(props.id)} />
             </BoxContent>
         )
@@ -73,9 +84,10 @@ export const SortTeam = ({ navigation }: any) => {
             alert('Insira um nome para o jogador')
             return
         }
-        setJogadores([...jogadores, { id: Math.floor(Math.random() * 1000), nome: nomeJogador, goleiro: isGk, isPayed: false }])
+        setJogadores([...jogadores, { id: Math.floor(Math.random() * 1000), nome: nomeJogador, goleiro: isGk, isPayed: false, skill: playerSkill}])
         setNomeJogador('')
         setIsGk(false)
+        setPlayerSkill(0)
     }
 
     const separarTimes = (jogadores: IJogadores[]): [IJogadores[], IJogadores[]] => {
@@ -124,8 +136,33 @@ export const SortTeam = ({ navigation }: any) => {
         }
     }
 
+    const setColorSkill = (skill: number) => {
+        if (skill <= 33) {
+            return 'red'
+        } else if (skill > 33 && skill <= 69) {
+            return 'orange'
+        } else {
+            return 'green'
+        }
+    }
+
     return (
         <Container>
+            <Modal visible={showSkillModal} animationType="slide" transparent={true} >
+                <ModalView>
+                    <TitleModal>Escolha a habilidade do jogador</TitleModal>
+                    <SkillValue>{skill.toFixed()}</SkillValue>
+                    <Slider
+                        onValueChange={(value) => setSkill(value)}
+                        style={{ width: ' 100%', height: 60 }}
+                        minimumValue={1}
+                        maximumValue={99}
+                        minimumTrackTintColor="#43C478"
+                        maximumTrackTintColor="#000000"
+                    />
+                    <ButtonMain text="Adicionar" color="#43C478" onPress={() => { HandleChangePlayerSkill(skill) }} />
+                </ModalView>
+            </Modal>
             <BoxHeader>
                 <InputCustom placeholder="Digite o nome do jogo" onChangeText={handleInputGame} value={gameName} width="100%" />
                 <BoxFlex>
@@ -137,6 +174,13 @@ export const SortTeam = ({ navigation }: any) => {
                     <Title>Goleiro?</Title>
                     <Switch value={isGk} onValueChange={() => setIsGk(!isGk)} />
                 </BoxFlex>
+                <BoxFlex>
+                    <BoxSkill>
+                        <SkillText>Habilidade do Jogador:</SkillText>
+                        <SkillValueText color={setColorSkill(playerSkill)}>{playerSkill.toFixed()}</SkillValueText>
+                    </BoxSkill>
+                    <ButtonMain width="60px" isSkill color="#43C478" onPress={() => { setShowSkillModal(!showSkillModal) }} />
+                </BoxFlex>
                 <ButtonMain text="Adicionar" onPress={handleAddButton} />
             </BoxHeader>
             <BoxBody>
@@ -145,7 +189,7 @@ export const SortTeam = ({ navigation }: any) => {
                     <FlatList
                         data={jogadores}
                         keyExtractor={(item) => item.id.toString()}
-                        renderItem={({ item }) => <ListaJogadores id={item.id} nome={item.nome} goleiro={item.goleiro} isPayed />}
+                        renderItem={({ item }) => <ListaJogadores id={item.id} nome={item.nome} goleiro={item.goleiro} isPayed skill={item.skill}  />}
                     />
                 </BoxFlatList>
             </BoxBody>

@@ -24,6 +24,7 @@ export const ViewPlayer = Styled.View`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 8px;
 `
 export const TextCard = Styled.Text`
     font-size: 14px;

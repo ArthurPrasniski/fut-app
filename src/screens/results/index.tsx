@@ -3,18 +3,30 @@ import { View, Text, FlatList, Linking } from "react-native"
 import { Container, Title } from "../../Global"
 import { CardHeader, CardTime, TextCard, TitleCard, ViewPlayer, Wrapper } from "./styles";
 import { ButtonMain } from "../../components/buttonmain";
-import { ContainerPosition, PositionText } from "../../components/playercard/styles";
+import { ContainerPosition, PositionText, SkillContainer, SkillText } from "../../components/playercard/styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface IJogadores {
     id: number;
     nome: string;
     goleiro: boolean;
+    skill: number;
 }
 
 export const Results = ({ navigation }: any) => {
     const [timeUm, setTimeUm] = useState<IJogadores[]>([])
     const [timeDois, setTimeDois] = useState<IJogadores[]>([])
+    console.log(timeDois)
+
+    const setColorSkill = (skill: string) => {
+        if (skill <= '33') {
+            return 'red'
+        } else if (skill > '33' && skill <= '69') {
+            return 'orange'
+        } else {
+            return 'green'
+        }
+    }
 
     const getData = async () => {
         try {
@@ -52,6 +64,9 @@ export const Results = ({ navigation }: any) => {
                 {props.goleiro === true ? <ContainerPosition>
                     <PositionText>GK</PositionText>
                 </ContainerPosition> : ""}
+                <SkillContainer background={setColorSkill(props?.skill?.toFixed())}>
+                    <SkillText>{props.skill.toFixed()}</SkillText>
+                </SkillContainer>
             </ViewPlayer>
         )
     }
@@ -65,7 +80,7 @@ export const Results = ({ navigation }: any) => {
                 <FlatList
                     data={timeUm}
                     keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => <ListaJogadores nome={item.nome} goleiro={item.goleiro} id={item.id} />}
+                    renderItem={({ item }) => <ListaJogadores nome={item.nome} goleiro={item.goleiro} id={item.id} skill={item.skill} />}
                 />
             </CardTime>
             <CardHeader>
@@ -75,7 +90,7 @@ export const Results = ({ navigation }: any) => {
                 <FlatList
                     data={timeDois}
                     keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => <ListaJogadores nome={item.nome} goleiro={item.goleiro} id={item.id} />}
+                    renderItem={({ item }) => <ListaJogadores nome={item.nome} goleiro={item.goleiro} id={item.id} skill={item.skill} />}
                 />
             </CardTime>
             <Wrapper>

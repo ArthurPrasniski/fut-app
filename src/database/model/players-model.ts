@@ -16,4 +16,7 @@ export class Player extends Model {
     @field('game_id')
     game_id!: string
 
+    @field('skill')
+    skill!: number
+
 }

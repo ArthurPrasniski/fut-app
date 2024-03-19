@@ -7,5 +7,5 @@ export {
     Home,
     SortTeam,
     Results,
-    OldGames
+    OldGames,
 }

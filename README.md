@@ -5,7 +5,7 @@
 [X] - adicionar splash screen
 [X] - status bar com a msm cor do background
 [] - Ajustar posicionamento botoes
-[] - Ao entrar em Partidas disputadas, a tela está vazia no primeiro acesso, poderia ter uma tela padrão de "Você ainda não tem partidas criadas"
+[x] - Ao entrar em Partidas disputadas, a tela está vazia no primeiro acesso, poderia ter uma tela padrão de "Você ainda não tem partidas criadas"
 [] - Ao entrar em Nova Partida, os inputs estão bem acima da área agradável de uso, poderiam estar mais abaixo
 [] - Ao tentar adicionar jogador sem nome, aparece um aviso com o título "Alert", poderia ser "Alerta" ou outro texto
 [] - Corrigir listagem de jogadores ao cadastrar jogadores

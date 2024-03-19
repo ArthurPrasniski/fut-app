@@ -9,31 +9,36 @@ export const Container = styled.View`
 
 export const HeaderTitle = styled.View`
     width: 100%;
-    flex-direction: row;
-    margin-top: 10px;       
-    margin-bottom: 12px;
-    padding-left: 20px;
-    padding-right: 32px;
-    align-items: flex-end;
-    justify-content: space-between;
+    height: 64px;
+    border-radius: 8px;
+    flex-direction: column;
+    margin-top: 32px;       
+    align-items: flex-start;
+    gap: 8px;
 `
 
 export const HeaderSubtitle = styled.View`
     width: 100%;
     flex-direction: row;
-    margin-top: 10px;
-    margin-bottom: 12px;
     padding-left: 20px;
     padding-right: 32px;
     align-items: flex-end;
     justify-content: space-between; 
+    margin-bottom: 8px;
 `
 
-export const PlayerCard = styled.View`
+export const Divider = styled.View`
     width: 100%;
-    height: 80px;
+    height: 1px;
+    background-color: #44475A;
+    margin-bottom: 16px;
+`
+
+export const PlayerCard = styled.TouchableOpacity`
+    width: 100%;
+    height: 44px;
     flex-direction: row;
-    margin-top: 18px;
+    margin-bottom: 18px;
     padding-left: 20px;
     padding-right: 32px;
     border-radius: 8px;
@@ -43,9 +48,20 @@ export const PlayerCard = styled.View`
 `
 
 export const Title = styled.Text`
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
-    color: #D9D9D9;
+    color: #fefefe;
+`
+
+export const SubTitle = styled.Text`
+    font-size: 12px;
+    font-weight: normal;
+    color: #55586B;
+`
+export const Header = styled.Text`
+    font-size: 14px;
+    font-weight: normal;
+    color: #fefefe;
 `
 
 export const ContainerGK = styled.View`

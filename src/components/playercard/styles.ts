@@ -18,7 +18,7 @@ export const PlayerText = styled.Text`
     font-weight: normal;
 `
 export const PositionText = styled.Text`
-    font-size: 16px;
+    font-size: 14px;
     color: #282a36;
     font-weight: bold;
 `

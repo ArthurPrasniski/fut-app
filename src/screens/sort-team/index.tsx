@@ -151,7 +151,6 @@ export const SortTeam = ({ navigation }: any) => {
             </BoxBody>
             <BoxFooter>
                 <ButtonMain text="Sortear" color="#43C478" onPress={handleSepararTimes} />
-                <ButtonMain text="Voltar" onPress={() => navigation.navigate('home')} />
             </BoxFooter>
         </Container>
     )

@@ -5,8 +5,8 @@ export const CardTime = Styled.View`
     height: 260px;
     padding: 16px;
     border-radius: 0px 0px 8px 8px;
+    margin-bottom: 24px; 
     background-color: ${(props: any) => (props.background ? props.background : '#fefefe')};
-    margin-bottom: 24px;
 `
 export const CardHeader = Styled.View`
     width: 100%;

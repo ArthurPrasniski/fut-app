@@ -185,7 +185,7 @@ export const SortTeam = ({ navigation }: any) => {
             </BoxHeader>
             <BoxBody>
                 <Title>{jogadores.length} Jogadores</Title>
-                <BoxFlatList>
+                <BoxFlatList height={'340px'}>
                     <FlatList
                         data={jogadores}
                         keyExtractor={(item) => item.id.toString()}

@@ -94,7 +94,6 @@ export const Results = ({ navigation }: any) => {
                 />
             </CardTime>
             <Wrapper>
-                {/* <ButtonMain text="Voltar" width="280px"onPress={() => navigation.navigate('home')} /> */}
                 <ButtonMain text="Compartilhar no Whatsapp" color="#43C478" onPress={handleShare} />
             </Wrapper>
         </Container>

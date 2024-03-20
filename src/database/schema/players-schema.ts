@@ -7,5 +7,6 @@ export const PlayerSchema = tableSchema({
         { name: 'goleiro', type: 'boolean' },
         { name: 'isPayed', type: 'boolean' },
         { name: 'game_id', type: 'string', isIndexed: true },
+        { name: 'skill', type: 'number'}
     ],
 })

@@ -6,8 +6,7 @@ import { ContainerGK, Divider, Header, HeaderSubtitle, HeaderTitle, PlayerCard, 
 import { BoxFlatList } from "../sort-team/styles";
 import Checkbox from "expo-checkbox";
 import { ButtonMain } from "../../components/buttonmain";
-import { ContainerPosition, PositionText } from "../../components/playercard/styles";
-import { set } from "lodash";
+import { ContainerPosition, PositionText, SkillContainer } from "../../components/playercard/styles";
 
 export const GamePayments = ({ route, navigation }: any) => {
     const [players, setPlayers] = useState<any>([]);
@@ -23,6 +22,7 @@ export const GamePayments = ({ route, navigation }: any) => {
             const playersCollection = await database.get('players').query(
                 Q.where('game_id', gameId)
             ).fetch();
+            console.log(playersCollection)
             setPlayers(playersCollection);
         } catch (e) {
             alert('Erro ao recuperar os Jogadores');
@@ -55,6 +55,16 @@ export const GamePayments = ({ route, navigation }: any) => {
         }
     }
 
+    const setColorSkill = (skill: number) => {
+        if (skill <= 33) {
+            return 'red'
+        } else if (skill > 33 && skill <= 69) {
+            return 'orange'
+        } else {
+            return 'green'
+        }
+    }
+
     return (
         <>
             <BoxFlatList style={{ height: "90%", padding: 20 }}>
@@ -75,6 +85,9 @@ export const GamePayments = ({ route, navigation }: any) => {
                                 <PositionText>GK</PositionText>
                             </ContainerPosition> : ""}
                         </ContainerGK>
+                        <SkillContainer background={setColorSkill(item?.skill?.toFixed())}>
+                            <Text>{item?.skill.toFixed()}</Text>
+                        </SkillContainer>
                         <Checkbox value={item.isPayed} onValueChange={(value) => handlePayed(item.id, value)} />
                     </PlayerCard>
                 )} />

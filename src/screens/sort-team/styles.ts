@@ -26,9 +26,7 @@ export const BoxMap = Styled.View`
 export const BoxFooter = Styled.View`
   width: 100%;
   position: fixed;
-  bottom: 20px;
-  top: 12px;
-  gap: 12px;
+  top: -24px;
 `
 export const BoxFlex = Styled.View`
   flex-direction: row;

@@ -9,7 +9,7 @@ export const Home = ({ navigation }: any) => {
       <StatusBar style="light" />
       <Title>FUT APP</Title>
       <SubTitle>Organize sua partida de futebol</SubTitle>
-      <ButtonNew onPress={() => navigation.navigate('SortTeam')}>
+      <ButtonNew onPress={() => navigation.navigate('NewGame')}>
         <ButtonText>Nova Partida</ButtonText>
         <Ionicons name="add-circle-outline" size={32} color="#fefefe" />
       </ButtonNew>

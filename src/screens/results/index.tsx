@@ -95,6 +95,11 @@ export const Results = ({ navigation }: any) => {
             </CardTime>
             <Wrapper>
                 <ButtonMain text="Compartilhar no Whatsapp" color="#43C478" onPress={handleShare} />
+                <ButtonMain text="Voltar para home" onPress={
+                    () => {
+                        navigation.navigate('home')
+                    }
+                } />
             </Wrapper>
         </Container>
     )

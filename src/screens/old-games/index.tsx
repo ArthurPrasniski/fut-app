@@ -46,7 +46,7 @@ export const OldGames = ({ navigation }: any) => {
       <Header>
         <TitleHeader>Partidas Anteriores</TitleHeader>
       </Header>
-      <BoxFlatList style={{ height: "90%", marginBottom: 18 }}>
+      <BoxFlatList style={{ height: "100%", marginBottom: 18 }} height='90%'>
         <Subtitle>Gerencie aqui as suas partidas</Subtitle>
         {games.length === 0 &&
           <AlertContainer>

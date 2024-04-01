@@ -1,7 +1,7 @@
 import React from "react";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { SortTeam, Results, Home, OldGames } from './src/screens'
+import { SortTeam, Results, Home, OldGames, NewGame } from './src/screens'
 import { GamePayments } from "./src/screens/game-payments";
 
 const Stack = createNativeStackNavigator();
@@ -41,6 +41,11 @@ export default function App() {
         <Stack.Screen
           name="GamePayments"
           component={GamePayments}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="NewGame"
+          component={NewGame}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

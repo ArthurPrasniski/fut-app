@@ -1,17 +1,17 @@
 import Styled from 'styled-components/native'
 
 export const BoxHeader = Styled.View`
-  width: 100%;
+   width: 100%;
   gap: 20px;
+  justify-content: space-between;
 `
 export const BoxBody = Styled.View`
- width: 100%;
  margin-top: 20px;
 `
 export const BoxFlatList = Styled.View`
  flex-direction: column;
  width: 100%;
- height: ${(props: any) => (props.height ? props.height : '380px')};
+ max-height: ${(props: any) => (props.height ? props.height : '460px')};
 `
 export const BoxContent = Styled.View`
   margin-top: 12px; 
@@ -25,8 +25,8 @@ export const BoxMap = Styled.View`
 `
 export const BoxFooter = Styled.View`
   width: 100%;
-  position: fixed;
-  top: -24px;
+  position: absolute;
+  bottom: 0px;
 `
 export const BoxFlex = Styled.View`
   flex-direction: row;
@@ -76,4 +76,9 @@ export const SkillValueText = Styled.Text`
   color:  ${(props: any) => (props.color ? props.color : '#fefefe')};
   font-weight: bold;
   text-align: center;
+`
+export const ContentWrapper = Styled.View`
+  width: 100%;
+  height: 100%;
+  gap: 24px;
 `

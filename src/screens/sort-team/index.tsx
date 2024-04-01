@@ -1,4 +1,4 @@
-import { BoxBody, BoxContent, BoxFlatList, BoxFlex, BoxFooter, BoxHeader, BoxSkill, ModalView, SkillText, SkillValue, SkillValueText, TitleModal } from "./styles"
+import { BoxBody, BoxContent, BoxFlatList, BoxFlex, BoxFooter, BoxHeader, BoxSkill, ContentWrapper, ModalView, SkillText, SkillValue, SkillValueText, TitleModal } from "./styles"
 import { Container, InputCustom, Title } from "../../Global"
 import { ButtonMain } from "../../components/buttonmain"
 import { PlayerCard } from "../../components/playercard"
@@ -28,7 +28,7 @@ interface IGame {
     jogadores: IJogadores[];
 }
 
-export const SortTeam = ({ navigation }: any) => {
+export const SortTeam = ({ route, navigation }: any) => {
     const [date, setDate] = useState(new Date());
     const [isGk, setIsGk] = useState(false)
     const [nomeJogador, setNomeJogador] = useState('')
@@ -38,29 +38,13 @@ export const SortTeam = ({ navigation }: any) => {
     const [skill, setSkill] = useState(0)
     const [playerSkill, setPlayerSkill] = useState(0)
 
-    const onChange = (event: any, selectedDate: any) => {
-        const currentDate = selectedDate;
-        setDate(currentDate);
-    };
-
-    const showMode = (currentMode: any) => {
-        DateTimePickerAndroid.open({
-            value: date,
-            onChange,
-            mode: currentMode,
-            is24Hour: true,
-        });
-    };
+    const { gameId } = route.params
 
     const HandleChangePlayerSkill = (skill: number) => {
         setPlayerSkill(skill)
         setSkill(0)
         setShowSkillModal(!showSkillModal)
     }
-
-    const showDatepicker = () => {
-        showMode('date');
-    };
 
     const deleteFromList = (id: number) => {
         const newJogadores = jogadores.filter((item) => item.id !== id)
@@ -70,29 +54,40 @@ export const SortTeam = ({ navigation }: any) => {
     const ListaJogadores = (props: IJogadores) => {
         return (
             <BoxContent key={props.id}>
-                <PlayerCard name={props.nome} position={props.goleiro} skill={props.skill}/>
+                <PlayerCard name={props.nome} position={props.goleiro} skill={props.skill} />
                 <ButtonDelete onPress={() => deleteFromList(props.id)} />
             </BoxContent>
         )
     }
 
     const handleInputChange = (value: SetStateAction<string>) => setNomeJogador(value)
-    const handleInputGame = (value: SetStateAction<string>) => setGameName(value)
 
     const handleAddButton = () => {
         if (nomeJogador === '') {
             alert('Insira um nome para o jogador')
             return
         }
-        setJogadores([...jogadores, { id: Math.floor(Math.random() * 1000), nome: nomeJogador, goleiro: isGk, isPayed: false, skill: playerSkill}])
+        setJogadores([...jogadores, { id: Math.floor(Math.random() * 1000), nome: nomeJogador, goleiro: isGk, isPayed: false, skill: playerSkill }])
         setNomeJogador('')
         setIsGk(false)
         setPlayerSkill(0)
     }
 
+    const shuffle = (array: any | any[]) => {
+        const shuffled = array.slice();
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    }
+
     const separarTimes = (jogadores: IJogadores[]): [IJogadores[], IJogadores[]] => {
-        const goleiros: IJogadores[] = jogadores.filter((jogador) => jogador.goleiro);
-        const naoGoleiros: IJogadores[] = jogadores.filter((jogador) => !jogador.goleiro);
+        // Ordena os jogadores pelo atributo "skill"
+        const jogadoresOrdenados = jogadores.sort((a, b) => b.skill - a.skill);
+
+        const goleiros = jogadoresOrdenados.filter((jogador) => jogador.goleiro);
+        const naoGoleiros = jogadoresOrdenados.filter((jogador) => !jogador.goleiro);
 
         const shuffledNaoGoleiros = shuffle([...naoGoleiros]);
 
@@ -107,27 +102,25 @@ export const SortTeam = ({ navigation }: any) => {
         return [time1, time2];
     }
 
+
+
     const handleSepararTimes = async () => {
         const [time1, time2] = separarTimes(jogadores);
         if (jogadores.length < 10) {
             alert('Insira no mínimo 10 jogadores')
         } else {
-            await AsyncStorage.setItem('@game', JSON.stringify({ id: Math.floor(Math.random() * 1000), nome: gameName, data: date, jogadores: jogadores } as unknown as IGame));
             await AsyncStorage.setItem('@jogadores', JSON.stringify(jogadores));
             await AsyncStorage.setItem('@timeum', JSON.stringify(time1));
             await AsyncStorage.setItem('@timedois', JSON.stringify(time2));
 
             await database.write(async () => {
-                const game = await database.get<Game>('games').create((newGame: any) => {
-                    newGame.nome = gameName;
-                    newGame.data = date.toISOString();
-                })
                 jogadores.forEach(async (jogador) => {
                     await database.get<Player>('players').create((newPlayer: any) => {
                         newPlayer.nome = jogador.nome;
                         newPlayer.goleiro = jogador.goleiro;
                         newPlayer.isPayed = jogador.isPayed;
-                        newPlayer.game_id = game.id;
+                        newPlayer.game_id = gameId;
+                        newPlayer.skill = jogador.skill;
                     });
                 });
             })
@@ -163,39 +156,36 @@ export const SortTeam = ({ navigation }: any) => {
                     <ButtonMain text="Adicionar" color="#43C478" onPress={() => { HandleChangePlayerSkill(skill) }} />
                 </ModalView>
             </Modal>
-            <BoxHeader>
-                <InputCustom placeholder="Digite o nome do jogo" onChangeText={handleInputGame} value={gameName} width="100%" />
-                <BoxFlex>
-                    <InputCustom placeholder="Selecione a data" width="280px" defaultValue={date.toLocaleDateString('PT-br')} editable={false} />
-                    <ButtonMain onPress={showDatepicker} width="60px" isCalendar />
-                </BoxFlex>
-                <BoxFlex>
-                    <InputCustom placeholder="Digite nome do jogador" onChangeText={handleInputChange} value={nomeJogador} />
-                    <Title>Goleiro?</Title>
-                    <Switch value={isGk} onValueChange={() => setIsGk(!isGk)} />
-                </BoxFlex>
-                <BoxFlex>
-                    <BoxSkill>
-                        <SkillText>Habilidade do Jogador:</SkillText>
-                        <SkillValueText color={setColorSkill(playerSkill)}>{playerSkill.toFixed()}</SkillValueText>
-                    </BoxSkill>
-                    <ButtonMain width="60px" isSkill color="#43C478" onPress={() => { setShowSkillModal(!showSkillModal) }} />
-                </BoxFlex>
-                <ButtonMain text="Adicionar" onPress={handleAddButton} />
-            </BoxHeader>
-            <BoxBody>
-                <Title>{jogadores.length} Jogadores</Title>
-                <BoxFlatList height={'340px'}>
-                    <FlatList
-                        data={jogadores}
-                        keyExtractor={(item) => item.id.toString()}
-                        renderItem={({ item }) => <ListaJogadores id={item.id} nome={item.nome} goleiro={item.goleiro} isPayed skill={item.skill}  />}
-                    />
-                </BoxFlatList>
-            </BoxBody>
-            <BoxFooter>
-                <ButtonMain text="Sortear" color="#43C478" onPress={handleSepararTimes} />
-            </BoxFooter>
+            <ContentWrapper>
+                <BoxHeader>
+                    <BoxFlex>
+                        <InputCustom placeholder="Digite nome do jogador" onChangeText={handleInputChange} value={nomeJogador} />
+                        <Title>Goleiro?</Title>
+                        <Switch value={isGk} onValueChange={() => setIsGk(!isGk)} />
+                    </BoxFlex>
+                    <BoxFlex>
+                        <BoxSkill>
+                            <SkillText>Habilidade do Jogador:</SkillText>
+                            <SkillValueText color={setColorSkill(playerSkill)}>{playerSkill.toFixed()}</SkillValueText>
+                        </BoxSkill>
+                        <ButtonMain width="60px" isSkill color="#43C478" onPress={() => { setShowSkillModal(!showSkillModal) }} />
+                    </BoxFlex>
+                    <ButtonMain text="Adicionar" onPress={handleAddButton} />
+                </BoxHeader>
+                <BoxBody >
+                    <Title>{jogadores.length} Jogadores</Title>
+                    <BoxFlatList>
+                        <FlatList
+                            data={jogadores}
+                            keyExtractor={(item) => item.id.toString()}
+                            renderItem={({ item }) => <ListaJogadores id={item.id} nome={item.nome} goleiro={item.goleiro} isPayed skill={item.skill} />}
+                        />
+                    </BoxFlatList>
+                </BoxBody>
+                <BoxFooter>
+                    <ButtonMain text="Sortear" color="#43C478" onPress={handleSepararTimes} />
+                </BoxFooter>
+            </ContentWrapper>
         </Container>
     )
 }

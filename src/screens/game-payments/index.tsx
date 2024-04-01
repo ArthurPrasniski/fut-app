@@ -67,7 +67,7 @@ export const GamePayments = ({ route, navigation }: any) => {
 
     return (
         <>
-            <BoxFlatList style={{ height: "90%", padding: 20 }}>
+            <BoxFlatList style={{ height: "90%", padding: 20 }} height='90%'>
                 <HeaderTitle>
                     <Title>{game.nome}</Title>
                     <SubTitle>{game.data?.split('T')[0].split('-').reverse().join('/')}</SubTitle>
@@ -85,13 +85,11 @@ export const GamePayments = ({ route, navigation }: any) => {
                                 <PositionText>GK</PositionText>
                             </ContainerPosition> : ""}
                         </ContainerGK>
-                        <SkillContainer background={setColorSkill(item?.skill?.toFixed())}>
-                            <Text>{item?.skill.toFixed()}</Text>
-                        </SkillContainer>
                         <Checkbox value={item.isPayed} onValueChange={(value) => handlePayed(item.id, value)} />
                     </PlayerCard>
                 )} />
-            </BoxFlatList><View style={{ padding: 20 }}>
+            </BoxFlatList>
+            <View style={{ padding: 20 }}>
                 <ButtonMain onPress={() => navigation.navigate('OldGames')} text="Voltar" />
             </View>
         </>

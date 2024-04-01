@@ -35,12 +35,11 @@ export const TextCard = Styled.Text`
 export const Wrapper = Styled.View`
     width: 100%;
     height: auto;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: flex-end;
     gap: 12px;
 `
-
 export const TitleCard = Styled.Text`
     font-size: 16px;
     font-weight: 700;

@@ -21,8 +21,7 @@ export const Header = styled.View`
     width: 100%;
     flex-direction: row;
     align-items: flex-end;
-    gap: 10px;
-    justify-content: space-between;
+    gap: 4px;
 `
 export const Title = styled.Text`
     font-size: 16px;

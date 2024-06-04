@@ -4,7 +4,7 @@ import { ButtonMain } from "../../components/buttonmain"
 import { PlayerCard } from "../../components/playercard"
 import { ButtonDelete } from "../../components/buttondelete"
 import { SetStateAction, useState } from "react"
-import { FlatList, Modal, Switch } from 'react-native'
+import { FlatList, Modal, Switch, TouchableOpacity } from 'react-native'
 import { shuffle } from 'lodash';
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import { database } from "../../database";
@@ -12,6 +12,9 @@ import { Game } from "../../database/model/games-model"
 import { Player } from "../../database/model/players-model"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Slider from '@react-native-community/slider';
+import { Header, TitleHeader } from "../old-games/stylest"
+import { ArrowBigLeftIcon } from "lucide-react-native"
+import { Navbar } from "../../components/navbar"
 
 interface IJogadores {
     id: number;
@@ -54,7 +57,7 @@ export const SortTeam = ({ route, navigation }: any) => {
     const ListaJogadores = (props: IJogadores) => {
         return (
             <BoxContent key={props.id}>
-                <PlayerCard name={props.nome} position={props.goleiro} skill={props.skill} />
+                <PlayerCard name={props.nome} position={props.goleiro} />
                 <ButtonDelete onPress={() => deleteFromList(props.id)} />
             </BoxContent>
         )
@@ -157,19 +160,27 @@ export const SortTeam = ({ route, navigation }: any) => {
                 </ModalView>
             </Modal>
             <ContentWrapper>
+                <Header>
+                    <TouchableOpacity onPress={() => navigation.navigate('home')}>
+                        <ArrowBigLeftIcon size={24} color="#43C478" />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('home')}>
+                        <TitleHeader>Adicione os jogadores</TitleHeader>
+                    </TouchableOpacity>
+                </Header>
                 <BoxHeader>
                     <BoxFlex>
                         <InputCustom placeholder="Digite nome do jogador" onChangeText={handleInputChange} value={nomeJogador} />
                         <Title>Goleiro?</Title>
                         <Switch value={isGk} onValueChange={() => setIsGk(!isGk)} />
                     </BoxFlex>
-                    <BoxFlex>
+                    {/* <BoxFlex>
                         <BoxSkill>
                             <SkillText>Habilidade do Jogador:</SkillText>
                             <SkillValueText color={setColorSkill(playerSkill)}>{playerSkill.toFixed()}</SkillValueText>
                         </BoxSkill>
                         <ButtonMain width="60px" isSkill color="#43C478" onPress={() => { setShowSkillModal(!showSkillModal) }} />
-                    </BoxFlex>
+                    </BoxFlex> */}
                     <ButtonMain text="Adicionar" onPress={handleAddButton} />
                 </BoxHeader>
                 <BoxBody >
@@ -178,12 +189,13 @@ export const SortTeam = ({ route, navigation }: any) => {
                         <FlatList
                             data={jogadores}
                             keyExtractor={(item) => item.id.toString()}
-                            renderItem={({ item }) => <ListaJogadores id={item.id} nome={item.nome} goleiro={item.goleiro} isPayed skill={item.skill} />}
+                            renderItem={({ item }) => <ListaJogadores id={item.id} nome={item.nome} goleiro={item.goleiro} isPayed />}
                         />
                     </BoxFlatList>
                 </BoxBody>
                 <BoxFooter>
                     <ButtonMain text="Sortear" color="#43C478" onPress={handleSepararTimes} />
+                    <Navbar navigation={navigation} currentScreen="NewGame" />
                 </BoxFooter>
             </ContentWrapper>
         </Container>

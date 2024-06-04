@@ -13,10 +13,12 @@ export const CardHeader = Styled.View`
     height: auto;
     padding: 16px;
     flex-direction: row;
-    background-color: #fefefe;
+    background-color: ${(props: any) => (props.background ? props.background : '#fefefe')};
+    color: ${(props: any) => (props.color ? props.color : '#fefefe')};
     justify-content: center;
     align-items: center;
     border-radius: 8px 8px 0px 0px;
+    margin-top: 16px;
 `
 export const ViewPlayer = Styled.View`
     width: 100%;
@@ -30,7 +32,7 @@ export const TextCard = Styled.Text`
     font-size: 14px;
     font-weight: 700;
     font-family: 'Roboto';
-    color: #fefefe;
+    color: #282A36;
 `
 export const Wrapper = Styled.View`
     width: 100%;
@@ -45,4 +47,14 @@ export const TitleCard = Styled.Text`
     font-weight: 700;
     font-family: 'Roboto';
     color:  ${(props: any) => (props.color ? props.color : '#fefefe')};
+`
+
+export const LinkShare = Styled.Text`
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Roboto';
+    color: #43C478;
+    text-decoration: underline;
+    margin-top: 16px;
+    text-align: center;
 `

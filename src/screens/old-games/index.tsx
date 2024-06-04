@@ -6,6 +6,8 @@ import { BoxFlatList } from "../sort-team/styles";
 import { ButtonMain } from "../../components/buttonmain";
 import { database } from "../../database";
 import Ionicons from '@expo/vector-icons/Ionicons'
+import { Navbar } from "../../components/navbar";
+import { ArrowBigLeftIcon } from "lucide-react-native";
 
 interface ICheckedStates {
   [key: number]: boolean;
@@ -44,9 +46,14 @@ export const OldGames = ({ navigation }: any) => {
   return (
     <Container>
       <Header>
-        <TitleHeader>Partidas Anteriores</TitleHeader>
+        <TouchableOpacity onPress={() => navigation.navigate('home')}>
+          <ArrowBigLeftIcon size={24} color="#43C478" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('home')}>
+          <TitleHeader>Partidas Anteriores</TitleHeader>
+        </TouchableOpacity>
       </Header>
-      <BoxFlatList style={{ height: "100%", marginBottom: 18 }} height='90%'>
+      <BoxFlatList style={{ height: "100%", marginBottom: 18 }} height='80%'>
         <Subtitle>Gerencie aqui as suas partidas</Subtitle>
         {games.length === 0 &&
           <AlertContainer>
@@ -65,7 +72,7 @@ export const OldGames = ({ navigation }: any) => {
           </TouchableOpacity>
         )} />
       </BoxFlatList>
-      <ButtonMain onPress={() => navigation.navigate('home')} text="Voltar" />
+      <Navbar navigation={navigation} currentScreen="OldGames" />
     </Container>
   )
 }

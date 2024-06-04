@@ -13,7 +13,8 @@ export const HeaderTitle = styled.View`
     border-radius: 8px;
     flex-direction: column;
     margin-top: 32px;       
-    align-items: flex-start;
+    align-items: start;
+    justify-content: center;
     gap: 8px;
 `
 

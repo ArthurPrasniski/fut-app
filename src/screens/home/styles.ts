@@ -41,3 +41,9 @@ export const Title = styled.Text`
     font-weight: bold;
     color: #43C478;
 `
+
+export const ContainerText = styled.View`
+    flex: 1;
+    justify-content: start;
+    align-items: center;
+`

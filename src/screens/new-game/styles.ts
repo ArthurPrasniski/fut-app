@@ -5,6 +5,7 @@ export const BoxHeader = Styled.View`
   height: 100%;
   gap: 20px;
   justify-content: space-between;
+  align-items: center;
 `
 export const BoxFooter = Styled.View`
   width: 100%;

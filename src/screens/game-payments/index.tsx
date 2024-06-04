@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from "react-native"
+import { View, Text, FlatList, TouchableOpacity } from "react-native"
 import { database } from "../../database"
 import { useEffect, useState } from "react";
 import { Q } from "@nozbe/watermelondb";
@@ -7,6 +7,10 @@ import { BoxFlatList } from "../sort-team/styles";
 import Checkbox from "expo-checkbox";
 import { ButtonMain } from "../../components/buttonmain";
 import { ContainerPosition, PositionText, SkillContainer } from "../../components/playercard/styles";
+import { AlertTriangleIcon, ArrowBigLeftIcon } from "lucide-react-native";
+import { TitleHeader } from "../old-games/stylest";
+import { Navbar } from "../../components/navbar";
+import { Container } from "../../Global";
 
 export const GamePayments = ({ route, navigation }: any) => {
     const [players, setPlayers] = useState<any>([]);
@@ -66,17 +70,27 @@ export const GamePayments = ({ route, navigation }: any) => {
     }
 
     return (
-        <>
-            <BoxFlatList style={{ height: "90%", padding: 20 }} height='90%'>
-                <HeaderTitle>
-                    <Title>{game.nome}</Title>
-                    <SubTitle>{game.data?.split('T')[0].split('-').reverse().join('/')}</SubTitle>
-                </HeaderTitle>
+        <Container>
+            <BoxFlatList style={{ height: "90%" }} height='80%'>
+                <TouchableOpacity style={{ alignItems: "flex-end", flexDirection: "row", marginBottom: 12 }} onPress={() => navigation.navigate('OldGames')}>
+                    <ArrowBigLeftIcon size={24} color="#43C478" />
+                    <View style={{ alignItems: "flex-end", flexDirection: "row", justifyContent: 'space-between', width: '90%' }}>
+                        <TitleHeader>{game.nome}</TitleHeader>
+                        <SubTitle>{game.data?.split('T')[0].split('-').reverse().join('/')}</SubTitle>
+                    </View>
+                </TouchableOpacity>
                 <Divider />
                 <HeaderSubtitle>
                     <Header>Jogador</Header>
                     <Header>Pago ({totalPayed}/{players.length})</Header>
                 </HeaderSubtitle>
+                {players.length === 0 ?
+                    <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                        <AlertTriangleIcon size={44} color="#D9D9D9" />
+                        <Text style={{ color: '#D9D9D9', fontSize: 18, fontWeight: 'bold', marginTop: 18, textAlign: 'center', width: '100%' }}>
+                            Nenhum jogador cadastrado para o jogo
+                        </Text>
+                    </View> : ""}
                 <FlatList data={players} renderItem={({ item }) => (
                     <PlayerCard onPress={() => handlePayed(item.id, !isChecked)}>
                         <ContainerGK>
@@ -89,9 +103,7 @@ export const GamePayments = ({ route, navigation }: any) => {
                     </PlayerCard>
                 )} />
             </BoxFlatList>
-            <View style={{ padding: 20 }}>
-                <ButtonMain onPress={() => navigation.navigate('OldGames')} text="Voltar" />
-            </View>
-        </>
+            <Navbar navigation={navigation} currentScreen="OldGames" />
+        </Container>
     )
 }

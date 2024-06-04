@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { View, Text, FlatList, Linking } from "react-native"
+import { View, Text, FlatList, Linking, Touchable, TouchableOpacity } from "react-native"
 import { Container, Title } from "../../Global"
-import { CardHeader, CardTime, TextCard, TitleCard, ViewPlayer, Wrapper } from "./styles";
+import { CardHeader, CardTime, LinkShare, TextCard, TitleCard, ViewPlayer, Wrapper } from "./styles";
 import { ButtonMain } from "../../components/buttonmain";
 import { ContainerPosition, PositionText, SkillContainer, SkillText } from "../../components/playercard/styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ArrowBigLeftIcon, Rows, Share } from "lucide-react-native";
+import { Header, TitleHeader } from "../old-games/stylest";
 
 interface IJogadores {
     id: number;
@@ -64,43 +66,47 @@ export const Results = ({ navigation }: any) => {
                 {props.goleiro === true ? <ContainerPosition>
                     <PositionText>GK</PositionText>
                 </ContainerPosition> : ""}
-                <SkillContainer background={setColorSkill(props?.skill?.toFixed())}>
+                {/* <SkillContainer background={setColorSkill(props?.skill?.toFixed())}>
                     <SkillText>{props.skill.toFixed()}</SkillText>
-                </SkillContainer>
+                </SkillContainer> */}
             </ViewPlayer>
         )
     }
 
     return (
         <Container>
-            <CardHeader>
-                <TitleCard color="#0075FF">Equipe Azul</TitleCard>
+            <Header>
+                <TouchableOpacity onPress={() => navigation.navigate('home')}>
+                    <ArrowBigLeftIcon size={24} color="#43C478" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('home')}>
+                    <TitleHeader>Resultado do sorteio</TitleHeader>
+                </TouchableOpacity>
+            </Header>
+            <CardHeader background="#0075FF">
+                <TitleCard>Equipe Azul</TitleCard>
             </CardHeader>
-            <CardTime background="#0075FF">
+            <CardTime>
                 <FlatList
                     data={timeUm}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => <ListaJogadores nome={item.nome} goleiro={item.goleiro} id={item.id} skill={item.skill} />}
                 />
             </CardTime>
-            <CardHeader>
-                <TitleCard color="#FF3F3F">Equipe Vermelha</TitleCard>
+            <CardHeader background="#FF0000">
+                <TitleCard>Equipe Vermelha</TitleCard>
             </CardHeader>
-            <CardTime background="#FF3F3F">
+            <CardTime>
                 <FlatList
                     data={timeDois}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => <ListaJogadores nome={item.nome} goleiro={item.goleiro} id={item.id} skill={item.skill} />}
                 />
             </CardTime>
-            <Wrapper>
-                <ButtonMain text="Compartilhar no Whatsapp" color="#43C478" onPress={handleShare} />
-                <ButtonMain text="Voltar para home" onPress={
-                    () => {
-                        navigation.navigate('home')
-                    }
-                } />
-            </Wrapper>
+            <TouchableOpacity style={{ alignItems: 'flex-end', flexDirection: 'row', gap: 8 }} onPress={handleShare}>
+                <LinkShare>Compartilhar no Whatsapp</LinkShare>
+                <Share size={16} color={"#43C478"} />
+            </TouchableOpacity>
         </Container>
     )
 }

@@ -1,22 +1,21 @@
 import { Container, SubTitle } from "../../Global"
-import { Title, ButtonNew, ButtonOlder, ButtonText, ButtonText2 } from "./styles"
+import { Title, ButtonNew, ButtonOlder, ButtonText, ButtonText2, ContainerText } from "./styles"
 import { StatusBar } from 'expo-status-bar';
 import Ionicons from '@expo/vector-icons/Ionicons'
+import { Navbar } from "../../components/navbar";
+import { View } from "react-native";
+import { useRoute } from "@react-navigation/native";
 
 export const Home = ({ navigation }: any) => {
+  const route = useRoute();
   return (
     <Container>
       <StatusBar style="light" />
-      <Title>FUT APP</Title>
-      <SubTitle>Organize sua partida de futebol</SubTitle>
-      <ButtonNew onPress={() => navigation.navigate('NewGame')}>
-        <ButtonText>Nova Partida</ButtonText>
-        <Ionicons name="add-circle-outline" size={32} color="#fefefe" />
-      </ButtonNew>
-      <ButtonOlder onPress={() => navigation.navigate('OldGames')}>
-        <ButtonText2>Partidas Disputadas</ButtonText2>
-        <Ionicons name="calendar" size={32} color="#43C478" />
-      </ButtonOlder>
+      <ContainerText>
+        <Title>FUT APP</Title>
+        <SubTitle>Organize sua partida de futebol</SubTitle>
+      </ContainerText>
+      <Navbar navigation={navigation} currentScreen={route.name}/>
     </Container>
   )
 }

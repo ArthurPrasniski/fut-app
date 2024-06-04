@@ -1,4 +1,4 @@
-import { Text } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import { Container, InputCustom } from '../../Global';
 import { BoxFlex } from '../sort-team/styles';
 import { ButtonMain } from '../../components/buttonmain';
@@ -8,6 +8,8 @@ import { BodyWrapper, BoxFooter, BoxHeader } from './styles'
 import { Header, TitleHeader } from '../old-games/stylest';
 import { database } from '../../database';
 import { Game } from '../../database/model/games-model';
+import { Navbar } from '../../components/navbar';
+import { ArrowBigLeftIcon } from 'lucide-react-native';
 
 export const NewGame = ({ navigation }: any) => {
     const [gameName, setGameName] = useState('')
@@ -54,15 +56,21 @@ export const NewGame = ({ navigation }: any) => {
             <BoxHeader>
                 <BodyWrapper>
                     <Header>
-                        <TitleHeader>Crie uma Partida</TitleHeader>
+                        <TouchableOpacity onPress={() => navigation.navigate('home')}>
+                            <ArrowBigLeftIcon size={24} color="#43C478" />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('home')}>
+                            <TitleHeader>Crie uma partida</TitleHeader>
+                        </TouchableOpacity>
                     </Header>
                     <InputCustom placeholder="Digite o nome do jogo" onChangeText={handleInputGame} value={gameName} width="100%" />
                     <BoxFlex>
                         <InputCustom placeholder="Selecione a data" width="280px" defaultValue={date.toLocaleDateString('PT-br')} editable={false} />
                         <ButtonMain onPress={showDatepicker} width="60px" isCalendar />
                     </BoxFlex>
+                    <ButtonMain color="#43C478" onPress={handleCreateGame} text='Criar Jogo' />
                 </BodyWrapper>
-                <ButtonMain color="#43C478" onPress={handleCreateGame} text='Criar Jogo' />
+                <Navbar navigation={navigation} currentScreen="NewGame" />
             </BoxHeader>
         </Container>
     )

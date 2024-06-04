@@ -11,7 +11,7 @@ export const BoxBody = Styled.View`
 export const BoxFlatList = Styled.View`
  flex-direction: column;
  width: 100%;
- max-height: ${(props: any) => (props.height ? props.height : '460px')};
+ max-height: ${(props: any) => (props.height ? props.height : '360px')};
 `
 export const BoxContent = Styled.View`
   margin-top: 12px; 
@@ -26,6 +26,9 @@ export const BoxMap = Styled.View`
 export const BoxFooter = Styled.View`
   width: 100%;
   position: absolute;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
   bottom: 0px;
 `
 export const BoxFlex = Styled.View`

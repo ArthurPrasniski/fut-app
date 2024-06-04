@@ -47,3 +47,8 @@ export const ContainerText = styled.View`
     justify-content: start;
     align-items: center;
 `
+export const TextLastGames = styled.Text`
+    font-size: 16px;
+    font-weight: 700;
+    color: #43C478;
+`

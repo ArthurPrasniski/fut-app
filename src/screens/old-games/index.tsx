@@ -15,7 +15,6 @@ interface ICheckedStates {
 
 export const OldGames = ({ navigation }: any) => {
   const [games, setGames] = useState<any>([])
-  console.log(games)
   const [checkedStates, setCheckedStates] = useState<ICheckedStates>({});
 
   const getData = async () => {

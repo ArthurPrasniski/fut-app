@@ -5,7 +5,7 @@ import { ButtonMain } from '../../components/buttonmain';
 import { SetStateAction, useState } from 'react';
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import { BodyWrapper, BoxFooter, BoxHeader } from './styles'
-import { Header, TitleHeader } from '../old-games/stylest';
+import { Header, Subtitle, TitleHeader } from '../old-games/stylest';
 import { database } from '../../database';
 import { Game } from '../../database/model/games-model';
 import { Navbar } from '../../components/navbar';
@@ -70,7 +70,6 @@ export const NewGame = ({ navigation }: any) => {
                     </BoxFlex>
                     <ButtonMain color="#43C478" onPress={handleCreateGame} text='Criar Jogo' />
                 </BodyWrapper>
-                <Navbar navigation={navigation} currentScreen="NewGame" />
             </BoxHeader>
         </Container>
     )

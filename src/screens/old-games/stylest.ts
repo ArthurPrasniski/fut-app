@@ -3,19 +3,23 @@ import Checkbox from 'expo-checkbox';
 
 export const PlayerCard = styled.View`
     width: 100%;
-    height: 80px;
-    flex-direction: row;
+    height: fit-content;
+    flex-direction: column;
     margin-top: 18px;
     padding: 12px;
     border-radius: 8px;
-    background-color: #f1f1f1;
-    align-items: center;
-    justify-content: space-between;
+    background-color: #23242e;
+    border-color: #23242e;
+    border-width: 1px;
 `
 
 export const ContainerGameDescription = styled.View`
-    flex-direction: column;
-    gap: 8px;
+    width: 100%;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6px;
+    margin-bottom: 8px;
 `
 export const Header = styled.View`
     width: 100%;
@@ -26,7 +30,7 @@ export const Header = styled.View`
 export const Title = styled.Text`
     font-size: 16px;
     font-weight: bold;
-    color: #000000;
+    color: #D9D9D9;
 `
 export const TitleHeader = styled.Text`
     font-size: 18px;

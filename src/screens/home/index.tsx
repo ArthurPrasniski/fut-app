@@ -1,10 +1,8 @@
 import { Container, SubTitle } from "../../Global"
-import { Title, ContainerText, TextLastGames } from "./styles"
+import { Title, ContainerText, TextLastGames, TitleCard, DataText, DescriptionText, TotalValue, ViewRow, TotalPlayers, TitleGame } from "./styles"
 import { StatusBar } from 'expo-status-bar';
 import Ionicons from '@expo/vector-icons/Ionicons'
-import { Navbar } from "../../components/navbar";
-import { FlatList, TouchableOpacity, Text, View } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import { FlatList, TouchableOpacity} from "react-native";
 import { ContainerGameDescription, PlayerCard } from "../old-games/stylest";
 import { useEffect, useState } from "react";
 import { database } from "../../database";
@@ -15,16 +13,23 @@ export const Home = ({ navigation }: any) => {
   const getData = async () => {
     try {
       const gamesCollection = await database.get('games').query().fetch();
+      const playersCollection = await database.get('players').query().fetch();
+
       const last3Games = gamesCollection.slice(-3);
-      setGames(last3Games);
+      const gamesWithPlayers = last3Games.map((game: any) => {
+        const gamePlayers = playersCollection.filter((player: any) => player.game_id === game.id);
+        return { ...game, players: gamePlayers };
+      });
+      setGames(gamesWithPlayers);
     } catch (e) {
       alert('Erro ao recuperar os Jogos anteriores');
     }
   };
+
   useEffect(() => {
     getData()
-  }, [])
-  const route = useRoute();
+  }, [games])
+
   return (
     <Container>
       <StatusBar style="light" />
@@ -33,18 +38,35 @@ export const Home = ({ navigation }: any) => {
         <SubTitle>Organize sua partida de futebol</SubTitle>
       </ContainerText>
       <TextLastGames>Últimas 3 partidas</TextLastGames>
-      <FlatList data={games} renderItem={({ item }) => (
-        <TouchableOpacity onPress={() => navigation.navigate('GamePayments', { gameId: item.id })}>
-          <PlayerCard>
-            <ContainerGameDescription>
-              <Text>{item.nome}</Text>
-              <Text>{item.data?.split('T')[0].split('-').reverse().join('/')}</Text>
-            </ContainerGameDescription>
-            <Ionicons name="chevron-forward" size={24} color="#43C478" />
-          </PlayerCard>
-        </TouchableOpacity>
-      )} />
-      <Navbar navigation={navigation} currentScreen={route.name} />
+      <FlatList data={games} renderItem={({ item }) => {
+        const payedPlayers = item.players?.filter((player: any) => player._raw.isPayed)
+        const unpayedPlayers = item.players?.filter((player: any) => !player._raw.isPayed)
+        return (
+          <TouchableOpacity onPress={() => navigation.navigate('GamePayments', { gameId: item._raw.id })}>
+            <PlayerCard>
+              <ContainerGameDescription>
+                <ViewRow>
+                  <TitleGame>{item._raw.nome}</TitleGame>
+                  <DataText>{item._raw.data?.split('T')[0].split('-').reverse().join('/')}</DataText>
+                </ViewRow>
+                <Ionicons name="chevron-forward" size={24} color="#43C478" />
+              </ContainerGameDescription>
+              <ViewRow>
+                <DescriptionText>Total de jogadores:</DescriptionText>
+                <TotalPlayers>{item.players.length}</TotalPlayers>
+              </ViewRow>
+              <ViewRow>
+                <DescriptionText>Jogadores Pagantes:</DescriptionText>
+                <TotalValue paid>{payedPlayers.length}</TotalValue>
+              </ViewRow>
+              <ViewRow>
+                <DescriptionText>Jogadores Não Pagantes:</DescriptionText>
+                <TotalValue paid={false}>{unpayedPlayers.length}</TotalValue>
+              </ViewRow>
+            </PlayerCard>
+          </TouchableOpacity>
+        );
+      }} />
     </Container>
   )
 }

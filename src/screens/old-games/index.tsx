@@ -27,7 +27,7 @@ export const OldGames = ({ navigation }: any) => {
   };
   useEffect(() => {
     getData()
-  }, [])
+  }, [games])
 
   const handleCheckChange = async (id: number, value: boolean) => {
     setCheckedStates(prevState => ({ ...prevState, [id]: value }));
@@ -44,15 +44,15 @@ export const OldGames = ({ navigation }: any) => {
 
   return (
     <Container>
-      <Header>
-        <TouchableOpacity onPress={() => navigation.navigate('home')}>
-          <ArrowBigLeftIcon size={24} color="#43C478" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('home')}>
-          <TitleHeader>Partidas Anteriores</TitleHeader>
-        </TouchableOpacity>
-      </Header>
-      <BoxFlatList style={{ height: "100%", marginBottom: 18 }} height='80%'>
+      <BoxFlatList>
+        <Header>
+          <TouchableOpacity onPress={() => navigation.navigate('home')}>
+            <ArrowBigLeftIcon size={24} color="#43C478" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('home')}>
+            <TitleHeader>Partidas Anteriores</TitleHeader>
+          </TouchableOpacity>
+        </Header>
         <Subtitle>Gerencie aqui as suas partidas</Subtitle>
         {games.length === 0 &&
           <AlertContainer>
@@ -66,12 +66,10 @@ export const OldGames = ({ navigation }: any) => {
                 <Title>{item.nome}</Title>
                 <Date>{item.data?.split('T')[0].split('-').reverse().join('/')}</Date>
               </ContainerGameDescription>
-              <Ionicons name="chevron-forward" size={24} color="#43C478" />
             </PlayerCard>
           </TouchableOpacity>
         )} />
       </BoxFlatList>
-      <Navbar navigation={navigation} currentScreen="OldGames" />
     </Container>
   )
 }

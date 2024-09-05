@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 
 export const Container = styled.View`
-  background-color: #FFFFFF;
+  background-color: #23242e;
   width: 300px;
   height: 40px;
   align-items: center;
@@ -14,7 +14,7 @@ export const Container = styled.View`
 
 export const PlayerText = styled.Text`
     font-size: 16px;
-    color: #282a36;
+    color: #fefefe;
     font-weight: normal;
 `
 export const PositionText = styled.Text`

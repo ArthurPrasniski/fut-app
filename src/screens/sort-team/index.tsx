@@ -12,7 +12,7 @@ import { Game } from "../../database/model/games-model"
 import { Player } from "../../database/model/players-model"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Slider from '@react-native-community/slider';
-import { Header, TitleHeader } from "../old-games/stylest"
+import { Header, Subtitle, TitleHeader } from "../old-games/stylest"
 import { ArrowBigLeftIcon } from "lucide-react-native"
 import { Navbar } from "../../components/navbar"
 
@@ -128,7 +128,7 @@ export const SortTeam = ({ route, navigation }: any) => {
                 });
             })
             setJogadores([])
-            navigation.navigate('results');
+            navigation.navigate('Results');
         }
     }
 
@@ -169,33 +169,25 @@ export const SortTeam = ({ route, navigation }: any) => {
                     </TouchableOpacity>
                 </Header>
                 <BoxHeader>
+                    <Subtitle>Adicione alguns jogadores a sua partida</Subtitle>
                     <BoxFlex>
                         <InputCustom placeholder="Digite nome do jogador" onChangeText={handleInputChange} value={nomeJogador} />
                         <Title>Goleiro?</Title>
                         <Switch value={isGk} onValueChange={() => setIsGk(!isGk)} />
                     </BoxFlex>
-                    {/* <BoxFlex>
-                        <BoxSkill>
-                            <SkillText>Habilidade do Jogador:</SkillText>
-                            <SkillValueText color={setColorSkill(playerSkill)}>{playerSkill.toFixed()}</SkillValueText>
-                        </BoxSkill>
-                        <ButtonMain width="60px" isSkill color="#43C478" onPress={() => { setShowSkillModal(!showSkillModal) }} />
-                    </BoxFlex> */}
                     <ButtonMain text="Adicionar" onPress={handleAddButton} />
                 </BoxHeader>
                 <BoxBody >
                     <Title>{jogadores.length} Jogadores</Title>
-                    <BoxFlatList>
-                        <FlatList
-                            data={jogadores}
-                            keyExtractor={(item) => item.id.toString()}
-                            renderItem={({ item }) => <ListaJogadores id={item.id} nome={item.nome} goleiro={item.goleiro} isPayed />}
-                        />
-                    </BoxFlatList>
+                    <FlatList
+                        style={{ height: '60%' }}
+                        data={jogadores}
+                        keyExtractor={(item) => item.id.toString()}
+                        renderItem={({ item }) => <ListaJogadores id={item.id} nome={item.nome} goleiro={item.goleiro} isPayed />}
+                    />
                 </BoxBody>
                 <BoxFooter>
                     <ButtonMain text="Sortear" color="#43C478" onPress={handleSepararTimes} />
-                    <Navbar navigation={navigation} currentScreen="NewGame" />
                 </BoxFooter>
             </ContentWrapper>
         </Container>

@@ -1,3 +1,4 @@
+import { HandIcon } from "lucide-react-native";
 import { Container, ContainerPosition, PlayerText, PositionText, SkillContainer, SkillText } from "./styles"
 
 interface IPlayerCardProps {
@@ -22,11 +23,7 @@ export const PlayerCard = (props: IPlayerCardProps) => {
                 {props.name}
             </PlayerText>
             {props.position ?
-                <ContainerPosition>
-                    <PositionText>
-                        GK
-                    </PositionText>
-                </ContainerPosition>
+                <HandIcon size={24} color="#50fa7b" />
                 : ''}
             {/* <SkillContainer background={setColorSkill(props.skill)}>
                 <SkillText>

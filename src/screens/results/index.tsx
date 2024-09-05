@@ -5,7 +5,7 @@ import { CardHeader, CardTime, LinkShare, TextCard, TitleCard, ViewPlayer, Wrapp
 import { ButtonMain } from "../../components/buttonmain";
 import { ContainerPosition, PositionText, SkillContainer, SkillText } from "../../components/playercard/styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ArrowBigLeftIcon, Rows, Share } from "lucide-react-native";
+import { ArrowBigLeftIcon, HandIcon, Rows, Share } from "lucide-react-native";
 import { Header, TitleHeader } from "../old-games/stylest";
 
 interface IJogadores {
@@ -63,9 +63,9 @@ export const Results = ({ navigation }: any) => {
         return (
             <ViewPlayer key={props.id}>
                 <TextCard>- {props?.nome}</TextCard>
-                {props.goleiro === true ? <ContainerPosition>
-                    <PositionText>GK</PositionText>
-                </ContainerPosition> : ""}
+                {props.goleiro === true ?
+                    <HandIcon size={24} color="#50fa7b" />
+                    : ""}
                 {/* <SkillContainer background={setColorSkill(props?.skill?.toFixed())}>
                     <SkillText>{props.skill.toFixed()}</SkillText>
                 </SkillContainer> */}
@@ -83,8 +83,8 @@ export const Results = ({ navigation }: any) => {
                     <TitleHeader>Resultado do sorteio</TitleHeader>
                 </TouchableOpacity>
             </Header>
-            <CardHeader background="#0075FF">
-                <TitleCard>Equipe Azul</TitleCard>
+            <CardHeader background="#0075FF40">
+                <TitleCard color="#0075FF">Equipe Azul</TitleCard>
             </CardHeader>
             <CardTime>
                 <FlatList
@@ -93,8 +93,8 @@ export const Results = ({ navigation }: any) => {
                     renderItem={({ item }) => <ListaJogadores nome={item.nome} goleiro={item.goleiro} id={item.id} skill={item.skill} />}
                 />
             </CardTime>
-            <CardHeader background="#FF0000">
-                <TitleCard>Equipe Vermelha</TitleCard>
+            <CardHeader background="#FF000040">
+                <TitleCard color="#FF0000">Equipe Vermelha</TitleCard>
             </CardHeader>
             <CardTime>
                 <FlatList

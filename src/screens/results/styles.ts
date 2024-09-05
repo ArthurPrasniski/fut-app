@@ -6,7 +6,7 @@ export const CardTime = Styled.View`
     padding: 16px;
     border-radius: 0px 0px 8px 8px;
     margin-bottom: 24px; 
-    background-color: ${(props: any) => (props.background ? props.background : '#fefefe')};
+    background-color: ${(props: any) => (props.background ? props.background : '#25272e')};
 `
 export const CardHeader = Styled.View`
     width: 100%;
@@ -32,7 +32,7 @@ export const TextCard = Styled.Text`
     font-size: 14px;
     font-weight: 700;
     font-family: 'Roboto';
-    color: #282A36;
+    color: #fefefe;
 `
 export const Wrapper = Styled.View`
     width: 100%;
